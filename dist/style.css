@@ -1,7 +1,14 @@
 @font-face {
-  font-family: 'Space Grotesk';
-  src: url('space-grotesk.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Geist';
+  src: url('geist.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('geist-mono.woff2') format('woff2');
+  font-weight: 100 900;
   font-display: swap;
 }
 
@@ -17,7 +24,7 @@
   --active: #e7deef;
   --border-hover: #88749f;
   --ease: cubic-bezier(.22, 1, .36, 1);
-  font-family: 'Space Grotesk', Helvetica, sans-serif;
+  font-family: 'Geist', Helvetica, sans-serif;
   background: var(--bg);
   color: var(--text);
   scrollbar-color: #aca9b2 var(--bg);
@@ -150,6 +157,7 @@ main { flex: 1; }
 .handoff-links a { text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--accent); }
 #cancel-link { text-decoration: none; }
 .handoff-links a:hover { color: var(--accent); }
+#handoff-countdown { font-family: 'Geist Mono', monospace; }
 .skeleton { display: grid; gap: 12px; margin-top: 24px; }
 .skeleton span { height: 12px; width: 75%; background: var(--border); border-radius: 3px; }
 .skeleton span:last-child { width: 45%; }

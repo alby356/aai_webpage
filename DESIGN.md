@@ -1,6 +1,6 @@
 # Visual direction
 Compact subject directory with a modest page title, subject filters, and alphabetical sorting. Separate club page with factual content. No large hero or slogans.
-Light mode throughout: Space Grotesk, cool white background #f8f9fb, white cards #ffffff, text #202024, secondary #62616a, borders #dcdce3, violet accent #67508b. Hover #f2eef7 and pressed #e7deef surfaces.
+Light mode throughout: Geist for display and body text, Geist Mono for countdown numerals, cool white background #f8f9fb, white cards #ffffff, text #202024, secondary #62616a, borders #dcdce3, violet accent #67508b. Hover #f2eef7 and pressed #e7deef surfaces.
 Six projects share a compact responsive grid. Each complete card is a link, with a top-right arrow revealed on hover or keyboard focus and always visible on touch devices. Chemistry and English each have one shared subject icon. Navigation has no underline. Native same-origin page transitions and a same-tab five-second new-tab handoff notice with destination, immediate link, and cancel action. Skeletons only while the handoff module initializes. Reduced motion disables animation while keeping the notice readable. Explicit empty/invalid-link states.
 
 The supplied circular club logo replaces the text mark. The header has a single Share a suggestion link followed by Discord and Instagram icon links with compact navigation gaps and no divider. The redirect Cancel link is plain; Continue now remains underlined.

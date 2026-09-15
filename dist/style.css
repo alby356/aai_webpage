@@ -65,6 +65,8 @@ svg {
 }
 main { flex: 1; }
 .directory, .club-page { padding-top: 40px; padding-bottom: 64px; }
+.directory { padding-top: 20px; }
+.directory .page-heading { margin-bottom: 16px; }
 .page-heading { margin-bottom: 36px; }
 .page-heading h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.2; font-weight: 500; letter-spacing: -.035em; }
 .directory-controls { display: flex; justify-content: space-between; align-items: center; gap: 24px; border-bottom: 1px solid var(--border); }
@@ -117,6 +119,7 @@ main { flex: 1; }
   .brand-name { font-size: 12px; padding-left: 12px; }
   .site-header nav { width: 100%; }
   .directory, .club-page { padding-top: 28px; padding-bottom: 40px; }
+  .directory { padding-top: 16px; }
   .page-heading { margin-bottom: 24px; }
   .page-heading h1 { font-size: 28px; }
   .subject-filters { gap: 0; }

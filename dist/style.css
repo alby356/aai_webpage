@@ -67,7 +67,6 @@ main { flex: 1; }
 .directory, .club-page { padding-top: 40px; padding-bottom: 64px; }
 .page-heading { margin-bottom: 36px; }
 .page-heading h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.2; font-weight: 500; letter-spacing: -.035em; }
-.page-heading p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--muted); }
 .directory-controls { display: flex; justify-content: space-between; align-items: center; gap: 24px; border-bottom: 1px solid var(--border); }
 .subject-filters { display: flex; flex-wrap: wrap; gap: 6px; }
 .subject-filters button { color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; min-height: 48px; padding: 12px 14px; font-size: 14px; transition: color 160ms, border-color 160ms, background 160ms; }

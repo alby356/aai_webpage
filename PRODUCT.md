@@ -12,4 +12,4 @@ Use the six URLs from the user. Foundable is the homepage reference; apply Uncod
 Static HTML, shared CSS, and small JavaScript modules. Keep real external links as the no-JavaScript fallback. Tools open in a new tab through a short branded transition. Do not fabricate tools or club meeting/contact details.
 
 ## Club identity and social links
-User-supplied sheep mascot: `dist/club-mascot.webp`. Discord: https://discord.gg/FeQfjJH4D. Instagram: https://www.instagram.com/gunnstudy/.
+User-supplied circular club logo: `dist/club-logo.webp`. Discord: https://discord.gg/FeQfjJH4D. Instagram: https://www.instagram.com/gunnstudy/.

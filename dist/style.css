@@ -47,14 +47,21 @@ svg {
 .skip-link:focus { clip-path: none; }
 .site-header { min-height: 96px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 20px; }
-.brand-mark { font-size: 36px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
-.brand-mark span { color: var(--accent); }
+.brand-mark { position: relative; display: block; width: 56px; height: 48px; flex-shrink: 0; overflow: hidden; }
+.brand-mark img { position: absolute; width: 84px; height: 84px; left: 50%; top: 50%; transform: translate(-50%, -43%); }
 .brand-name { font-size: 14px; line-height: 1.6; border-left: 1px solid var(--border); padding-left: 20px; }
 .school-name { color: var(--muted); }
 .site-header nav { display: flex; gap: 28px; font-size: 14px; color: var(--muted); }
 .site-header nav a { padding-block: 12px; transition: color 160ms; }
 .site-header nav a[aria-current] { color: var(--text); }
 .site-header nav a:hover, .site-footer a:hover { color: var(--accent); }
+.social-link { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 44px; }
+.discord-link svg { fill: currentColor; stroke: none; }
+@media (min-width: 601px) and (max-width: 760px) {
+  .site-header { flex-wrap: wrap; gap: 8px; padding-top: 16px; }
+  .site-header nav { width: 100%; }
+  .discord-link { margin-left: auto; }
+}
 main { flex: 1; }
 .directory, .club-page { padding-top: 40px; padding-bottom: 64px; }
 .page-heading { margin-bottom: 36px; }
@@ -116,9 +123,9 @@ main { flex: 1; }
   .wrap { padding-inline: 20px; }
   .site-header { min-height: 108px; flex-wrap: wrap; gap: 12px; padding-top: 20px; padding-bottom: 8px; }
   .brand { gap: 12px; }
-  .brand-mark { font-size: 30px; }
   .brand-name { font-size: 12px; padding-left: 12px; }
   .site-header nav { width: 100%; gap: 24px; }
+  .discord-link { margin-left: auto; }
   .directory, .club-page { padding-top: 28px; padding-bottom: 40px; }
   .page-heading { margin-bottom: 24px; }
   .page-heading h1 { font-size: 28px; }
@@ -148,6 +155,7 @@ main { flex: 1; }
 .handoff-progress span { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
 .handoff-links { display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; }
 .handoff-links a { text-decoration: underline; text-underline-offset: 5px; text-decoration-color: #665b76; }
+#cancel-link { text-decoration: none; }
 .handoff-links a:hover { color: var(--accent); }
 .skeleton { display: grid; gap: 12px; margin-top: 24px; }
 .skeleton span { height: 12px; width: 75%; background: var(--border); border-radius: 3px; }

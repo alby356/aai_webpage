@@ -59,7 +59,7 @@ svg {
 .site-header nav a[aria-current] { color: var(--text); }
 .site-header nav a:hover, .site-footer a:hover { color: var(--accent); }
 .nav-pages { display: flex; align-items: center; gap: 14px; }
-.nav-social { display: flex; align-items: center; gap: 8px; padding-left: 16px; border-left: 1px solid var(--border); }
+.nav-social { display: flex; align-items: center; gap: 8px; }
 .social-link { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 44px; }
 .discord-link svg { fill: currentColor; stroke: none; }
 @media (min-width: 601px) and (max-width: 760px) {

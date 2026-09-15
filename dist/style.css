@@ -51,10 +51,12 @@ svg {
 .brand-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .brand-name { font-size: 14px; line-height: 1.6; border-left: 1px solid var(--border); padding-left: 20px; }
 .school-name { color: var(--muted); }
-.site-header nav { display: flex; gap: 14px; font-size: 14px; color: var(--muted); }
+.site-header nav { display: flex; align-items: center; gap: 20px; font-size: 14px; color: var(--muted); }
 .site-header nav a { padding-block: 12px; transition: color 160ms; }
 .site-header nav a[aria-current] { color: var(--text); }
 .site-header nav a:hover, .site-footer a:hover { color: var(--accent); }
+.nav-pages { display: flex; align-items: center; gap: 14px; }
+.nav-social { display: flex; align-items: center; gap: 8px; padding-left: 16px; border-left: 1px solid var(--border); }
 .social-link { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 44px; }
 .discord-link svg { fill: currentColor; stroke: none; }
 @media (min-width: 601px) and (max-width: 760px) {
@@ -88,7 +90,6 @@ main { flex: 1; }
 .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 16px; padding: 11px 14px; border: 1px solid var(--border); background: #222; color: var(--text); border-radius: 5px; font-size: 14px; line-height: 1.4; transition: background 160ms, border-color 160ms, color 160ms; }
 .button:hover { background: #302c35; border-color: #77707f; }
 .button:active { background: #43394f; border-color: var(--accent); }
-.link-note { font-size: 13px; line-height: 1.6; color: var(--muted); margin: 20px 0 0; }
 .empty-state { padding: 60px 24px; text-align: center; border: 1px dashed var(--border); border-radius: 6px; }
 .empty-state h2 { font-size: 22px; font-weight: 500; margin: 0 0 12px; }
 .empty-state p { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 46ch; margin: 0 auto 24px; }

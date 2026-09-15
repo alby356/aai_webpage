@@ -9,69 +9,72 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="space-grotesk.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#tools">Skip to study tools</a>
   <header class="site-header wrap">
-    <a class="brand" href="#" aria-label="Applied AI Engineering Club home"><span class="brand-mark" aria-hidden="true">aai<span>_</span></span><span class="brand-name">Applied AI<br>Engineering Club</span></a>
-    <nav aria-label="Main navigation"><a href="#tools">Study tools</a><a href="#club">The club</a></nav>
+    <a class="brand" href="/" aria-label="Applied AI Engineering Club home"><span class="brand-mark" aria-hidden="true">aai<span>_</span></span><span class="brand-name">Applied AI Engineering Club<br><span class="school-name">Gunn High School</span></span></a>
+    <nav aria-label="Main navigation"><a href="/" aria-current="page">Study tools</a><a href="club.html">The club</a></nav>
   </header>
 
-  <main>
-    <section class="hero wrap" aria-labelledby="intro">
-      <h1 id="intro">We build what we<br>wish we had in class.</h1>
-      <p>We’re Gunn High School’s Applied AI Engineering Club.<br>A group of students turning ideas into tools for learning.</p>
-      <a class="button primary" href="#tools">Explore our tools <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></a>
-    </section>
-
-    <section class="projects wrap" id="tools" aria-labelledby="tools-title">
-      <div class="section-heading"><h2 id="tools-title">Made for your next study session.</h2><span>6 tools, built by students</span></div>
+  <main class="directory wrap">
+    <section class="projects" id="tools" aria-labelledby="tools-title">
+      <div class="page-heading"><h1 id="tools-title">Study tools</h1><p>Made at Gunn. Ready for your next study session.</p></div>
+      <div class="directory-controls" hidden>
+        <div class="subject-filters" role="group" aria-label="Filter tools by subject">
+          <button type="button" data-subject="all" aria-pressed="true">All subjects</button>
+          <button type="button" data-subject="chemistry" aria-pressed="false">Chemistry</button>
+          <button type="button" data-subject="english" aria-pressed="false">English</button>
+          <button type="button" data-subject="math" aria-pressed="false">Math</button>
+          <button type="button" data-subject="apush" aria-pressed="false">APUSH</button>
+        </div>
+        <label class="sort-control">Sort <select id="sort"><option value="featured">Featured</option><option value="name">Name A–Z</option></select></label>
+      </div>
+      <p class="result-count" role="status" aria-live="polite">6 tools</p>
       <div class="project-grid">
-        <article class="project">
-          <div class="project-top"><span>Chemistry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6m-5 0v6l-6 10a1.3 1.3 0 0 0 1 2h14a1.3 1.3 0 0 0 1-2L14 9V3M7 15h10"/></svg></div>
-          <h3>Chem Ions</h3>
-          <p>Get ion names, formulas, and charges to stick. Quiz yourself and revisit the ones you missed.</p>
-          <a class="button tool-link" href="https://chemions.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Ions in a new tab">Open Chem Ions <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="chemistry" data-name="Chem Ions">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#chemistry"/></svg><span>Chemistry</span></div>
+          <h2>Chem Ions</h2>
+          <p>Practice ion names, formulas, and charges. Review the questions you missed.</p>
+          <a class="button tool-link" href="https://chemions.vercel.app/" data-tool="chemions" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Ions in a new tab">Open Chem Ions <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
-        <article class="project">
-          <div class="project-top"><span>Reading &amp; writing</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v7H5c0 3 2 5 4 6M14 5h6v7h-5c0 3 2 5 4 6"/></svg></div>
-          <h3>QuoteSearch</h3>
-          <p>You have the quote. Find its page number so you can get back to writing.</p>
-          <a class="button tool-link" href="https://quotesearch.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open QuoteSearch in a new tab">Open QuoteSearch <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="english" data-name="QuoteSearch">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#english"/></svg><span>English</span></div>
+          <h2>QuoteSearch</h2>
+          <p>Find a quote’s page number for your next essay or reading assignment.</p>
+          <a class="button tool-link" href="https://quotesearch.vercel.app/" data-tool="quotesearch" target="_blank" rel="noopener noreferrer" aria-label="Open QuoteSearch in a new tab">Open QuoteSearch <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
-        <article class="project">
-          <div class="project-top"><span>Chemistry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 9v9M3 8l9 4 9-4"/></svg></div>
-          <h3>Chem Shapes</h3>
-          <p>Practice molecular shapes, bond angles, and polarity with a VSEPR reference close at hand.</p>
-          <a class="button tool-link" href="https://chemshapes.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Shapes in a new tab">Open Chem Shapes <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="chemistry" data-name="Chem Shapes">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#chemistry"/></svg><span>Chemistry</span></div>
+          <h2>Chem Shapes</h2>
+          <p>Quiz yourself on molecular geometry, bond angles, and polarity.</p>
+          <a class="button tool-link" href="https://chemshapes.vercel.app/" data-tool="chemshapes" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Shapes in a new tab">Open Chem Shapes <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
-        <article class="project">
-          <div class="project-top"><span>Chemistry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16M9 3v4m6 10v4"/></svg></div>
-          <h3>Chem Balancing</h3>
-          <p>Work through balanced equations, oxidation states, and redox half-reactions one problem at a time.</p>
-          <a class="button tool-link" href="https://chembalancing.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Balancing in a new tab">Open Chem Balancing <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="chemistry" data-name="Chem Balancing">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#chemistry"/></svg><span>Chemistry</span></div>
+          <h2>Chem Balancing</h2>
+          <p>Practice balancing equations, oxidation states, and redox half-reactions.</p>
+          <a class="button tool-link" href="https://chembalancing.vercel.app/" data-tool="chembalancing" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Balancing in a new tab">Open Chem Balancing <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
-        <article class="project">
-          <div class="project-top"><span>Chemistry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3S5 11 5 15a7 7 0 0 0 14 0c0-4-7-12-7-12ZM8 15c0 2 1 3 3 3"/></svg></div>
-          <h3>Chem Solubility</h3>
-          <p>Soluble or insoluble? Test your instincts and learn the rules behind each answer.</p>
-          <a class="button tool-link" href="https://chemsolu.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Solubility in a new tab">Open Chem Solubility <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="chemistry" data-name="Chem Solubility">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#chemistry"/></svg><span>Chemistry</span></div>
+          <h2>Chem Solubility</h2>
+          <p>Practice solubility rules and learn why a compound dissolves in water.</p>
+          <a class="button tool-link" href="https://chemsolu.vercel.app/" data-tool="chemsolu" target="_blank" rel="noopener noreferrer" aria-label="Open Chem Solubility in a new tab">Open Chem Solubility <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
-        <article class="project">
-          <div class="project-top"><span>Vocabulary</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6c2 0 2 1 2 2 0-1 0-2 2-2h6v15h-6c-2 0-2 1-2 2 0-1 0-2-2-2H4V4Zm8 2v15"/></svg></div>
-          <h3>Wocab</h3>
-          <p>Build vocabulary cards with definitions, synonyms, and example sentences. Then put them to the test.</p>
-          <a class="button tool-link" href="https://wocab.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Wocab in a new tab">Open Wocab <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <article class="project" data-subject="english" data-name="Wocab">
+          <div class="project-top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="icons.svg#english"/></svg><span>English</span></div>
+          <h2>Wocab</h2>
+          <p>Create and review vocabulary cards with definitions, synonyms, and examples.</p>
+          <a class="button tool-link" href="https://wocab.vercel.app/" data-tool="wocab" target="_blank" rel="noopener noreferrer" aria-label="Open Wocab in a new tab">Open Wocab <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </article>
       </div>
+      <div class="empty-state" hidden><h2 id="empty-title"></h2><p id="empty-description"></p><button class="button" type="button" id="reset-filters">Show all tools</button></div>
       <p class="link-note">Tools open in a new tab. Wocab may require access through its sign-up form.</p>
     </section>
 
-    <section class="club wrap" id="club" aria-labelledby="club-title">
-      <h2 id="club-title">Students who learn.<br>Students who build.</h2>
-      <p>At Gunn High School, our Applied AI Engineering Club brings our interest in AI and engineering into the classroom. These projects started with the subjects we study and the tools we wanted to use.</p>
-    </section>
   </main>
-  <footer class="site-footer wrap"><span>Applied AI Engineering Club · Gunn High School</span><a href="#">Back to top <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></a></footer>
+  <footer class="site-footer wrap"><span>Applied AI Engineering Club · Gunn High School</span><a href="club.html">About the club</a></footer>
 </body>
 </html>

@@ -13,3 +13,6 @@ Static HTML, shared CSS, and small JavaScript modules. Keep real external links 
 
 ## Club identity and social links
 User-supplied circular club logo: `dist/club-logo.webp`. Discord: https://discord.gg/FeQfjJH4D. Instagram: https://www.instagram.com/gunnstudy/.
+
+Suggestions form: https://docs.google.com/forms/d/e/1FAIpQLScrMBwfGVP2ETjgOs-q47CLVZrYeUqS-HIaA6WHqK54OQGXVg/viewform?usp=sharing&ouid=115474412342338918362
+Linked in both page footers and in the club page actions. Opens Google Forms directly in a new tab.

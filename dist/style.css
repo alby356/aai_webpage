@@ -95,7 +95,9 @@ main { flex: 1; }
 .club-intro { display: grid; grid-template-columns: 1fr 2fr; gap: 56px; padding-block: 32px 48px; border-top: 1px solid var(--border); }
 .club-intro h2 { font-size: 20px; font-weight: 500; margin: 0; letter-spacing: -.02em; }
 .club-intro p { font-size: 17px; line-height: 1.8; max-width: 65ch; color: var(--muted); margin: 0 0 20px; }
-.site-footer { padding-block: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 24px; font-size: 13px; color: var(--muted); }
+.club-actions, .footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-links a { padding-block: 8px; }
+.site-footer { padding-block: 24px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; font-size: 13px; color: var(--muted); }
 
 @view-transition { navigation: auto; }
 ::view-transition-old(root) { animation: 140ms ease-out both fade-out; }
@@ -126,7 +128,6 @@ main { flex: 1; }
   .club-intro { grid-template-columns: 1fr; gap: 20px; padding-bottom: 32px; }
   .site-footer { align-items: flex-start; gap: 24px; font-size: 12px; }
   .site-footer > span { max-width: 220px; }
-  .site-footer > a { white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

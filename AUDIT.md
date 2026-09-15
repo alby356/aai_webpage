@@ -11,7 +11,7 @@ Removed the requested hero, slogans, and homepage club section together with the
 Check: `node check.mjs` verifies filtering, empty subjects, sort order, and unchanged original order. Both content pages retain direct navigation links without JavaScript.
 
 ## Pass 3 — navigation guardrails
-Published destination configuration permits only known tool IDs; arbitrary URLs and inherited object keys cannot become redirects. Real HTML links remain the no-JavaScript fallback, and checks keep them aligned with the transition configuration. New-tab anchors preserve native modifier-click behavior. Reduced motion bypasses the handoff animation. Invalid links have recovery navigation; animation cancellation continues navigation; the immediate link remains available. The tiny skeleton is shown only during module initialization, without an artificial data-loading delay.
+Published destination configuration permits only known tool IDs; arbitrary URLs and inherited object keys cannot become redirects. Real HTML links remain the no-JavaScript fallback, and checks keep them aligned with the transition configuration. New-tab anchors preserve native modifier-click behavior. Reduced motion disables animation. Invalid links have recovery navigation. The user subsequently requested a deliberate two-second redirect notice; its timer is independent of animation and is cancelled by Continue now, Cancel, or page exit. The tiny skeleton is shown only during module initialization.
 
 Check: `node check.mjs` and `node --check dist/app.js`. Verify local content routes and referenced assets return HTTP 200. No backend, persistence, user forms, mock overrides, secrets, or error boundaries existed to replace.
 

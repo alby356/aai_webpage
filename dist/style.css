@@ -52,8 +52,8 @@ svg {
 .brand-name { font-size: 14px; line-height: 1.6; border-left: 1px solid var(--border); padding-left: 20px; }
 .school-name { color: var(--muted); }
 .site-header nav { display: flex; gap: 28px; font-size: 14px; color: var(--muted); }
-.site-header nav a { padding-block: 12px; border-bottom: 1px solid transparent; transition: color 160ms; }
-.site-header nav a[aria-current] { color: var(--text); border-color: var(--accent); }
+.site-header nav a { padding-block: 12px; transition: color 160ms; }
+.site-header nav a[aria-current] { color: var(--text); }
 .site-header nav a:hover, .site-footer a:hover { color: var(--accent); }
 main { flex: 1; }
 .directory, .club-page { padding-top: 40px; padding-bottom: 64px; }
@@ -69,17 +69,19 @@ main { flex: 1; }
 .sort-control select { color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 4px; min-height: 40px; padding: 8px 10px; font-size: 14px; }
 .result-count { color: var(--muted); font-size: 13px; margin: 22px 0 14px; font-variant-numeric: tabular-nums; }
 .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.project { padding: 24px; display: flex; flex-direction: column; align-items: flex-start; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); transition: border-color 180ms, background 180ms; }
-.project:hover { border-color: #56515e; }
+.project { position: relative; padding: 24px; display: flex; flex-direction: column; align-items: flex-start; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); transition: border-color 180ms, background 180ms; }
+.project:hover, .project:focus-visible { border-color: #82718f; background: #232026; }
+.project:active { background: #2b2532; }
+.project-arrow { position: absolute; top: 24px; right: 24px; color: var(--accent); opacity: 0; transform: translate(-4px, 4px); transition: opacity 180ms, transform 220ms var(--ease); }
+.project:hover .project-arrow, .project:focus-visible .project-arrow { opacity: 1; transform: translate(0, 0); }
+@media (hover: none) { .project-arrow { opacity: 1; transform: none; } }
 .project-top { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; margin-bottom: 20px; }
 .project-top svg { width: 17px; height: 17px; color: var(--accent); }
 .project h2 { font-size: 21px; line-height: 1.3; font-weight: 500; letter-spacing: -.025em; margin: 0 0 10px; }
-.project p { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 24px; max-width: 38ch; flex: 1; }
+.project p { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0; max-width: 38ch; flex: 1; }
 .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 16px; padding: 11px 14px; border: 1px solid var(--border); background: #222; color: var(--text); border-radius: 5px; font-size: 14px; line-height: 1.4; transition: background 160ms, border-color 160ms, color 160ms; }
 .button:hover { background: #302c35; border-color: #77707f; }
 .button:active { background: #43394f; border-color: var(--accent); }
-.tool-link { justify-content: space-between; width: 100%; gap: 8px; }
-.tool-link svg { width: 17px; height: 17px; }
 .link-note { font-size: 13px; line-height: 1.6; color: var(--muted); margin: 20px 0 0; }
 .empty-state { padding: 60px 24px; text-align: center; border: 1px dashed var(--border); border-radius: 6px; }
 .empty-state h2 { font-size: 22px; font-weight: 500; margin: 0 0 12px; }
@@ -125,7 +127,7 @@ main { flex: 1; }
   .project-grid { grid-template-columns: 1fr; gap: 12px; }
   .project { padding: 22px; }
   .project-top { margin-bottom: 14px; }
-  .project p { max-width: none; margin-bottom: 20px; }
+  .project p { max-width: none; }
   .club-intro { grid-template-columns: 1fr; gap: 20px; padding-bottom: 32px; }
   .club-focus dl > div { grid-template-columns: 1fr; gap: 10px; }
   .club-focus dd:last-child { grid-column: 1; }

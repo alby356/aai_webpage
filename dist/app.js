@@ -47,7 +47,7 @@ if (controls) {
 }
 
 // Keep real destination links in the HTML for no-JavaScript navigation.
-document.querySelectorAll('.tool-link').forEach(link => {
+document.querySelectorAll('.project[data-tool]').forEach(link => {
   const id = link.dataset.tool;
   if (getDestination(id)?.url === link.href) {
     link.href = `open.html?tool=${encodeURIComponent(id)}`;
@@ -66,22 +66,21 @@ if (handoff) {
     detail.textContent = 'Choose a published tool from the study tools page.';
     document.querySelector('.handoff-progress').hidden = true;
   } else {
-    title.textContent = `Opening ${destination.name}`;
-    detail.textContent = new URL(destination.url).hostname;
+    title.textContent = `Redirecting to ${destination.name}`;
+    detail.textContent = `You’re leaving the club website for ${new URL(destination.url).hostname}. You’ll continue automatically in 2 seconds.`;
     const direct = document.querySelector('#continue-link');
     direct.href = destination.url;
     direct.hidden = false;
-    const go = () => location.replace(destination.url);
+    const timer = setTimeout(() => location.replace(destination.url), 2000);
+    direct.addEventListener('click', () => clearTimeout(timer));
+    document.querySelector('#cancel-link').addEventListener('click', () => clearTimeout(timer));
+    addEventListener('pagehide', () => clearTimeout(timer), { once: true });
     const progress = document.querySelector('.handoff-progress span');
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !progress.animate) {
-      go();
-    } else {
-      const animation = progress.animate(
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && progress.animate) {
+      progress.animate(
         [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
-        { duration: 360, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' },
+        { duration: 2000, easing: 'linear', fill: 'forwards' },
       );
-      // Cancellation must not strand a visitor on the transition page.
-      animation.finished.then(go, go);
     }
   }
 }

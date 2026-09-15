@@ -46,11 +46,15 @@ if (controls) {
   controls.hidden = false;
 }
 
-// Keep real destination links in the HTML for no-JavaScript navigation.
+// Preserve direct URLs for no-JavaScript and native new-tab actions.
 document.querySelectorAll('.project[data-tool]').forEach(link => {
   const id = link.dataset.tool;
   if (getDestination(id)?.url === link.href) {
-    link.href = `open.html?tool=${encodeURIComponent(id)}`;
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      location.assign(`open.html?tool=${encodeURIComponent(id)}`);
+    });
   }
 });
 
@@ -66,8 +70,8 @@ if (handoff) {
     detail.textContent = 'Choose a published tool from the study tools page.';
     document.querySelector('.handoff-progress').hidden = true;
   } else {
-    title.textContent = `Redirecting to ${destination.name}`;
-    detail.textContent = `You’re leaving the club website for ${new URL(destination.url).hostname}.`;
+    title.textContent = `Opening ${destination.name}`;
+    detail.textContent = `${new URL(destination.url).hostname} will open in a new tab. This tab stays on the club website.`;
     const direct = document.querySelector('#continue-link');
     direct.href = destination.url;
     direct.hidden = false;
@@ -76,19 +80,39 @@ if (handoff) {
     const countdown = document.querySelector('#handoff-countdown');
     countdown.hidden = false;
     let timer;
+    function stopCountdown() {
+      clearTimeout(timer);
+      countdown.hidden = true;
+      document.querySelector('.handoff-progress').hidden = true;
+      document.querySelector('#cancel-link').textContent = 'Return to tools';
+    }
     function tick() {
       const remaining = Math.max(0, deadline - performance.now());
       const seconds = Math.ceil(remaining / 1000);
       countdown.textContent = seconds
         ? `Continuing in ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`
-        : 'Redirecting now…';
-      if (remaining === 0) location.replace(destination.url);
-      else timer = setTimeout(tick, Math.min(1000, remaining));
+        : 'Opening now…';
+      if (remaining === 0) {
+        stopCountdown();
+        const toolTab = window.open(destination.url, '_blank');
+        if (toolTab) {
+          // Detach before the asynchronously loaded external page can access this tab.
+          toolTab.opener = null;
+          title.textContent = `Opened ${destination.name}`;
+          detail.textContent = 'Your tool is open in a new tab.';
+          direct.textContent = 'Open again';
+        } else {
+          title.textContent = 'Your tool is ready';
+          detail.textContent = 'Your browser blocked the automatic new tab. Select Open tool to continue.';
+          direct.textContent = 'Open tool';
+        }
+      } else timer = setTimeout(tick, Math.min(1000, remaining));
     }
     tick();
-    direct.addEventListener('click', () => clearTimeout(timer));
-    document.querySelector('#cancel-link').addEventListener('click', () => clearTimeout(timer));
-    addEventListener('pagehide', () => clearTimeout(timer), { once: true });
+    direct.addEventListener('click', stopCountdown);
+    direct.addEventListener('auxclick', stopCountdown);
+    document.querySelector('#cancel-link').addEventListener('click', stopCountdown);
+    addEventListener('pagehide', stopCountdown, { once: true });
     const progress = document.querySelector('.handoff-progress span');
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && progress.animate) {
       progress.animate(

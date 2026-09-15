@@ -30,11 +30,36 @@ console.log('Passed: six allowed destinations, missing/unknown parameters, inher
 
 // Exercise the actual redirect handler without launching external study tools.
 const script = readFileSync(new URL('./dist/app.js', import.meta.url), 'utf8').replace(/^import .*;\n/, '');
-for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced', 'delayed']) {
+for (const [, href, id] of links) {
+  let navigated;
+  const link = { href, dataset: { tool: id }, events: {}, addEventListener(type, callback) { this.events[type] = callback; } };
+  runInNewContext(script, {
+    getDestination,
+    document: { querySelector: () => null, querySelectorAll: () => [link] },
+    location: { assign: url => { navigated = url; } },
+  });
+  assert.equal(link.href, href, 'Keep the real tool URL for native new-tab actions');
+  for (const modifier of ['ctrlKey', 'metaKey', 'shiftKey', 'altKey']) {
+    link.events.click({ button: 0, [modifier]: true, preventDefault: () => assert.fail('Preserve modified clicks') });
+    assert.equal(navigated, undefined);
+  }
+  let prevented = false;
+  link.events.click({ button: 0, preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, true);
+  assert.equal(navigated, `open.html?tool=${id}`, 'Show the notice in the current tab');
+}
+const handoffHTML = readFileSync(new URL('./dist/open.html', import.meta.url), 'utf8');
+assert.match(handoffHTML, /id="continue-link"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
+console.log('Passed: same-tab notices, direct native new-tab links, and modified clicks.');
+
+for (const action of ['automatic', 'cancel', 'continue', 'middle', 'invalid', 'reduced', 'delayed', 'blocked', 'pagehide']) {
   const elements = new Map();
   let pending;
   let delay;
   let navigated;
+  let opened;
+  const popup = { opener: {} };
+  const pageEvents = {};
   let animated = false;
   let now = 0;
   let animationDuration;
@@ -51,9 +76,10 @@ for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced', '
     performance: { now: () => now },
     document: { querySelector: selector => selector === '.directory-controls' ? null : element(selector), querySelectorAll: () => [] },
     location: { search: action === 'invalid' ? '?tool=evil' : '?tool=chemions', replace: url => { navigated = url; } },
+    window: { open: (url, target) => { opened = { url, target }; return action === 'blocked' ? null : popup; } },
     setTimeout: (callback, ms) => { pending = callback; delay = ms; return 1; },
     clearTimeout: () => { pending = undefined; },
-    addEventListener() {},
+    addEventListener(type, callback) { pageEvents[type] = callback; },
     matchMedia: () => ({ matches: action === 'reduced' }),
   });
   if (action === 'invalid') {
@@ -66,10 +92,12 @@ for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced', '
   if (animated) assert.equal(animationDuration, 5000);
   assert.match(element('#handoff-detail').textContent, /chemions\.vercel\.app/);
   assert.equal(element('#continue-link').href, 'https://chemions.vercel.app/');
-  if (action === 'cancel' || action === 'continue') {
-    element(action === 'cancel' ? '#cancel-link' : '#continue-link').events.click();
+  if (['cancel', 'continue', 'middle', 'pagehide'].includes(action)) {
+    if (action === 'pagehide') pageEvents.pagehide();
+    else element(action === 'cancel' ? '#cancel-link' : '#continue-link').events[action === 'middle' ? 'auxclick' : 'click']();
     assert.equal(pending, undefined);
     assert.equal(navigated, undefined);
+    assert.equal(opened, undefined, 'Manual links use native navigation without a second automatic tab');
   } else {
     if (action === 'reduced') assert.equal(animated, false);
     if (action !== 'delayed') {
@@ -79,12 +107,22 @@ for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced', '
         const seconds = Math.ceil((5000 - elapsed) / 1000);
         assert.equal(element('#handoff-countdown').textContent, `Continuing in ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`);
         assert.equal(navigated, undefined, 'Do not redirect before five seconds');
+        assert.equal(opened, undefined, 'Do not open any tab during the countdown');
       }
     }
     now = action === 'delayed' ? 6500 : 5000;
     pending();
-    assert.equal(element('#handoff-countdown').textContent, 'Redirecting now…');
-    assert.equal(navigated, 'https://chemions.vercel.app/');
+    assert.equal(navigated, undefined, 'The club tab must never navigate to the external tool');
+    assert.deepEqual(opened, { url: 'https://chemions.vercel.app/', target: '_blank' });
+    assert.equal(element('#handoff-countdown').hidden, true);
+    assert.equal(element('.handoff-progress').hidden, true);
+    if (action === 'blocked') {
+      assert.match(element('#handoff-detail').textContent, /blocked.*Open tool/);
+      assert.equal(element('#continue-link').textContent, 'Open tool');
+    } else {
+      assert.equal(popup.opener, null, 'External tools cannot control the club tab');
+      assert.match(element('#handoff-detail').textContent, /new tab/);
+    }
   }
 }
-console.log('Passed: live five-second countdown, matching progress duration, delayed callbacks, cancellation, invalid destination, and reduced motion.');
+console.log('Passed: five-second countdown, external new tabs, popup recovery, cancellation, invalid destinations, and reduced motion.');

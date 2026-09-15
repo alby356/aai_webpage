@@ -67,11 +67,25 @@ if (handoff) {
     document.querySelector('.handoff-progress').hidden = true;
   } else {
     title.textContent = `Redirecting to ${destination.name}`;
-    detail.textContent = `You’re leaving the club website for ${new URL(destination.url).hostname}. You’ll continue automatically in 2 seconds.`;
+    detail.textContent = `You’re leaving the club website for ${new URL(destination.url).hostname}.`;
     const direct = document.querySelector('#continue-link');
     direct.href = destination.url;
     direct.hidden = false;
-    const timer = setTimeout(() => location.replace(destination.url), 2000);
+    const redirectDuration = 5000;
+    const deadline = performance.now() + redirectDuration;
+    const countdown = document.querySelector('#handoff-countdown');
+    countdown.hidden = false;
+    let timer;
+    function tick() {
+      const remaining = Math.max(0, deadline - performance.now());
+      const seconds = Math.ceil(remaining / 1000);
+      countdown.textContent = seconds
+        ? `Continuing in ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`
+        : 'Redirecting now…';
+      if (remaining === 0) location.replace(destination.url);
+      else timer = setTimeout(tick, Math.min(1000, remaining));
+    }
+    tick();
     direct.addEventListener('click', () => clearTimeout(timer));
     document.querySelector('#cancel-link').addEventListener('click', () => clearTimeout(timer));
     addEventListener('pagehide', () => clearTimeout(timer), { once: true });
@@ -79,7 +93,7 @@ if (handoff) {
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && progress.animate) {
       progress.animate(
         [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
-        { duration: 2000, easing: 'linear', fill: 'forwards' },
+        { duration: redirectDuration, easing: 'linear', fill: 'forwards' },
       );
     }
   }

@@ -30,22 +30,25 @@ console.log('Passed: six allowed destinations, missing/unknown parameters, inher
 
 // Exercise the actual redirect handler without launching external study tools.
 const script = readFileSync(new URL('./dist/app.js', import.meta.url), 'utf8').replace(/^import .*;\n/, '');
-for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced']) {
+for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced', 'delayed']) {
   const elements = new Map();
   let pending;
   let delay;
   let navigated;
   let animated = false;
+  let now = 0;
+  let animationDuration;
   const element = selector => {
     if (!elements.has(selector)) elements.set(selector, {
       events: {},
       addEventListener(type, callback) { this.events[type] = callback; },
-      animate() { animated = true; },
+      animate(frames, options) { animated = true; animationDuration = options.duration; },
     });
     return elements.get(selector);
   };
   runInNewContext(script, {
     selectTools, getDestination, URL, URLSearchParams,
+    performance: { now: () => now },
     document: { querySelector: selector => selector === '.directory-controls' ? null : element(selector), querySelectorAll: () => [] },
     location: { search: action === 'invalid' ? '?tool=evil' : '?tool=chemions', replace: url => { navigated = url; } },
     setTimeout: (callback, ms) => { pending = callback; delay = ms; return 1; },
@@ -58,7 +61,9 @@ for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced']) 
     assert.match(element('#handoff-title').textContent, /isn’t available/);
     continue;
   }
-  assert.equal(delay, 2000);
+  assert.equal(delay, 1000);
+  assert.equal(element('#handoff-countdown').textContent, 'Continuing in 5 seconds.');
+  if (animated) assert.equal(animationDuration, 5000);
   assert.match(element('#handoff-detail').textContent, /chemions\.vercel\.app/);
   assert.equal(element('#continue-link').href, 'https://chemions.vercel.app/');
   if (action === 'cancel' || action === 'continue') {
@@ -67,8 +72,19 @@ for (const action of ['automatic', 'cancel', 'continue', 'invalid', 'reduced']) 
     assert.equal(navigated, undefined);
   } else {
     if (action === 'reduced') assert.equal(animated, false);
+    if (action !== 'delayed') {
+      for (const elapsed of [1000, 2000, 3000, 4000, 4999]) {
+        now = elapsed;
+        pending();
+        const seconds = Math.ceil((5000 - elapsed) / 1000);
+        assert.equal(element('#handoff-countdown').textContent, `Continuing in ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`);
+        assert.equal(navigated, undefined, 'Do not redirect before five seconds');
+      }
+    }
+    now = action === 'delayed' ? 6500 : 5000;
     pending();
+    assert.equal(element('#handoff-countdown').textContent, 'Redirecting now…');
     assert.equal(navigated, 'https://chemions.vercel.app/');
   }
 }
-console.log('Passed: redirect notice, two-second delay, cancellation, continue link, invalid destination, and reduced motion.');
+console.log('Passed: live five-second countdown, matching progress duration, delayed callbacks, cancellation, invalid destination, and reduced motion.');
